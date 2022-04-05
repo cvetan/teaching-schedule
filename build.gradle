@@ -33,3 +33,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// custom configurations
+bootRun {
+    args = ["--spring.profiles.active=dev"]
+}
