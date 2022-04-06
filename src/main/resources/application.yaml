@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
   liquibase:
-    change-log: db/changelog-master.yml
+    change-log: db/changelog-master.yaml
   jpa:
     hibernate:
       ddl-auto: validate
