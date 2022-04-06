@@ -1,1 +1,10 @@
-databaseChangeLog: []
+databaseChangeLog:
+  - include:
+      file: changelog/changelog-20220406022257.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelog/changelog-20220406023830.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelog/changelog-20220406025401.yaml
+      relativeToChangelogFile: true

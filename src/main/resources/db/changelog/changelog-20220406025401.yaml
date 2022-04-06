@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1649206441784-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_lesson_funds
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: lesson_type
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: lesson_number
+                  type: INT
+              - column:
+                  name: subject_id
+                  type: BIGINT
+            tableName: lesson_funds
+  - changeSet:
+      id: 1649206441784-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_subjects
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: epsb_points
+                  type: INT
+            tableName: subjects
+  - changeSet:
+      id: 1649206441784-3
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uc_subjects_name
+            tableName: subjects
+  - changeSet:
+      id: 1649206441784-4
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: subject_id
+            baseTableName: lesson_funds
+            constraintName: FK_LESSON_FUNDS_ON_SUBJECT
+            referencedColumnNames: id
+            referencedTableName: subjects
+

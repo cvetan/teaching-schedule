@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1649204577332-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_study_programmes
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: epsb_points
+                  type: INT
+              - column:
+                  name: number_of_years
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: study_level
+                  type: VARCHAR(255)
+            tableName: study_programmes
+  - changeSet:
+      id: 1649204577332-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uc_study_programmes_name
+            tableName: study_programmes
+
