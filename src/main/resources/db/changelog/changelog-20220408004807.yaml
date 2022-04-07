@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1649371687650-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_academic_years
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: year
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: start_date
+                  type: DATETIME
+              - column:
+                  constraints:
+                    nullable: false
+                  name: end_date
+                  type: DATETIME
+            tableName: academic_years
+  - changeSet:
+      id: 1649371687650-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: year
+            constraintName: uc_academic_years_year
+            tableName: academic_years
+
