@@ -7,15 +7,19 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "subject_lesson_funds")
+@Table(name = "teacher_subject_assignments")
 @Getter
 @Setter
-public class SubjectLessonFund {
+public class TeacherSubjectAssignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
@@ -25,6 +29,4 @@ public class SubjectLessonFund {
     @Enumerated(EnumType.STRING)
     private LessonType lessonType;
 
-    @Column(name = "lesson_number", nullable = false)
-    private Integer lessonNumber;
 }

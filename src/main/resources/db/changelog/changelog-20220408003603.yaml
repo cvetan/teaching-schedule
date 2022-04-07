@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1649370963892-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnDataType: BIGINT
+            columnName: subject_id
+            tableName: subject_lesson_funds
+            validate: true
+

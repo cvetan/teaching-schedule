@@ -1,16 +1,16 @@
 package dev.cvetan.teachingschedule.entity;
 
-import dev.cvetan.teachingschedule.model.LessonType;
+import dev.cvetan.teachingschedule.model.Semester;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "subject_lesson_funds")
+@Table(name = "programe_subject_assignments")
 @Getter
 @Setter
-public class SubjectLessonFund {
+public class ProgrameSubjectAssignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,15 @@ public class SubjectLessonFund {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "study_programme_id", nullable = false)
+    private StudyProgramme studyProgramme;
+
+    @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    @Column(name = "lesson_type", nullable = false)
+    @Column(name = "semester", nullable = false)
     @Enumerated(EnumType.STRING)
-    private LessonType lessonType;
+    private Semester semester;
 
-    @Column(name = "lesson_number", nullable = false)
-    private Integer lessonNumber;
 }

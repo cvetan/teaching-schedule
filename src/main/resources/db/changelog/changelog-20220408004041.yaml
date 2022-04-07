@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1649371241474-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_teacher_subject_assignments
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: teacher_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: subject_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: lesson_type
+                  type: VARCHAR(255)
+            tableName: teacher_subject_assignments
+  - changeSet:
+      id: 1649371241474-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: subject_id
+            baseTableName: teacher_subject_assignments
+            constraintName: FK_TEACHER_SUBJECT_ASSIGNMENTS_ON_SUBJECT
+            referencedColumnNames: id
+            referencedTableName: subjects
+  - changeSet:
+      id: 1649371241474-3
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: teacher_id
+            baseTableName: teacher_subject_assignments
+            constraintName: FK_TEACHER_SUBJECT_ASSIGNMENTS_ON_TEACHER
+            referencedColumnNames: id
+            referencedTableName: teachers
+
