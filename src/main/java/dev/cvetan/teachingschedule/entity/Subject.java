@@ -25,5 +25,5 @@ public class Subject {
 
     @OneToMany
     @JoinColumn(name = "subject_id")
-    private Set<LessonFund> lessonFunds;
+    private Set<SubjectLessonFund> subjectLessonFunds;
 }

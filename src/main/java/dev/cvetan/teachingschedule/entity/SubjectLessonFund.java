@@ -7,10 +7,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lesson_funds")
+@Table(name = "subject_lesson_funds")
 @Getter
 @Setter
-public class LessonFund {
+public class SubjectLessonFund {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1649370190856-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_subject_lesson_funds
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: lesson_type
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: lesson_number
+                  type: INT
+              - column:
+                  name: subject_id
+                  type: BIGINT
+            tableName: subject_lesson_funds
+  - changeSet:
+      id: 1649370190856-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: subject_id
+            baseTableName: subject_lesson_funds
+            constraintName: FK_SUBJECT_LESSON_FUNDS_ON_SUBJECT
+            referencedColumnNames: id
+            referencedTableName: subjects
+  - changeSet:
+      id: 1649370190856-3
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: lesson_funds
+            constraintName: FK_LESSON_FUNDS_ON_SUBJECT
+  - changeSet:
+      id: 1649370190856-4
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: lesson_funds
+
