@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1652318583758-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_timeslots
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: day_of_week
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: start_time
+                  type: TIME
+              - column:
+                  constraints:
+                    nullable: false
+                  name: end_time
+                  type: TIME
+            tableName: timeslots
+
