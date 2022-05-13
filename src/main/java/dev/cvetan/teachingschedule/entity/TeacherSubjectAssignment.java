@@ -1,6 +1,6 @@
 package dev.cvetan.teachingschedule.entity;
 
-import dev.cvetan.teachingschedule.model.LessonType;
+import dev.cvetan.teachingschedule.model.enums.LessonType;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,4 +1,4 @@
-package dev.cvetan.teachingschedule.model;
+package dev.cvetan.teachingschedule.model.enums;
 
 public enum SubjectType {
     MANDATORY,

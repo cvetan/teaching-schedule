@@ -1,6 +1,6 @@
 package dev.cvetan.teachingschedule.entity;
 
-import dev.cvetan.teachingschedule.model.StudyLevel;
+import dev.cvetan.teachingschedule.model.enums.StudyLevel;
 import lombok.Getter;
 import lombok.Setter;
 
