@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1652452786280-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_programme_subject_assignments_student_groups
+                  name: programme_subject_assignment_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_programme_subject_assignments_student_groups
+                  name: student_group_id
+                  type: BIGINT
+            tableName: programme_subject_assignments_student_groups
+  - changeSet:
+      id: 1652452786280-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: programme_subject_assignment_id
+            baseTableName: programme_subject_assignments_student_groups
+            constraintName: fk_prosubassstugro_on_programme_subject_assignment
+            referencedColumnNames: id
+            referencedTableName: programme_subject_assignments
+  - changeSet:
+      id: 1652452786280-3
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: student_group_id
+            baseTableName: programme_subject_assignments_student_groups
+            constraintName: fk_prosubassstugro_on_student_group
+            referencedColumnNames: id
+            referencedTableName: student_groups
+
