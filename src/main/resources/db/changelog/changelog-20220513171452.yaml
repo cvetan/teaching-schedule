@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1652454892920-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: classroom_id
+                  type: BIGINT
+            tableName: lessons
+  - changeSet:
+      id: 1652454892920-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addNotNullConstraint:
+            columnDataType: BIGINT
+            columnName: classroom_id
+            tableName: lessons
+  - changeSet:
+      id: 1652454892920-3
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: classroom_id
+            baseTableName: lessons
+            constraintName: FK_LESSONS_ON_CLASSROOM
+            referencedColumnNames: id
+            referencedTableName: classrooms
+

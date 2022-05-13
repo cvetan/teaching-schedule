@@ -29,6 +29,10 @@ public class Lesson {
     @JoinColumn(name = "timeslot_id", nullable = false)
     private Timeslot timeslot;
 
+    @ManyToOne
+    @JoinColumn(name = "classroom_id", nullable = false)
+    private Classroom classroom;
+
     @Column(name = "lesson_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private LessonType lessonType;
