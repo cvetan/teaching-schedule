@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1652454184424-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_lessons
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: subject_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: student_group_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: timeslot_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: lesson_type
+                  type: VARCHAR(255)
+            tableName: lessons
+  - changeSet:
+      id: 1652454184424-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: student_group_id
+            baseTableName: lessons
+            constraintName: FK_LESSONS_ON_STUDENT_GROUP
+            referencedColumnNames: id
+            referencedTableName: student_groups
+  - changeSet:
+      id: 1652454184424-3
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: subject_id
+            baseTableName: lessons
+            constraintName: FK_LESSONS_ON_SUBJECT
+            referencedColumnNames: id
+            referencedTableName: subjects
+  - changeSet:
+      id: 1652454184424-4
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: timeslot_id
+            baseTableName: lessons
+            constraintName: FK_LESSONS_ON_TIMESLOT
+            referencedColumnNames: id
+            referencedTableName: timeslots
+
