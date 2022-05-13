@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1652436913448-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_programme_subject_assignments
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: study_programme_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: subject_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: semester
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: subject_type
+                  type: VARCHAR(255)
+            tableName: programme_subject_assignments
+  - changeSet:
+      id: 1652436913448-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: study_programme_id
+            baseTableName: programme_subject_assignments
+            constraintName: FK_PROGRAMME_SUBJECT_ASSIGNMENTS_ON_STUDY_PROGRAMME
+            referencedColumnNames: id
+            referencedTableName: study_programmes
+  - changeSet:
+      id: 1652436913448-3
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: subject_id
+            baseTableName: programme_subject_assignments
+            constraintName: FK_PROGRAMME_SUBJECT_ASSIGNMENTS_ON_SUBJECT
+            referencedColumnNames: id
+            referencedTableName: subjects
+  - changeSet:
+      id: 1652436913448-4
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: programe_subject_assignments
+            constraintName: FK_PROGRAME_SUBJECT_ASSIGNMENTS_ON_STUDY_PROGRAMME
+  - changeSet:
+      id: 1652436913448-5
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: programe_subject_assignments
+            constraintName: FK_PROGRAME_SUBJECT_ASSIGNMENTS_ON_SUBJECT
+  - changeSet:
+      id: 1652436913448-6
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: programe_subject_assignments
+

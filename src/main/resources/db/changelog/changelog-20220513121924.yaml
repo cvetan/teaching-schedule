@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1652437164533-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_student_groups
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+            tableName: student_groups
+  - changeSet:
+      id: 1652437164533-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uc_student_groups_name
+            tableName: student_groups
+
