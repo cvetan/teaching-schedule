@@ -1,16 +1,10 @@
 package dev.cvetan.teachingschedule.cli;
 
-import dev.cvetan.teachingschedule.entity.ProgrammeSubjectAssignment;
-import dev.cvetan.teachingschedule.entity.StudentGroup;
-import dev.cvetan.teachingschedule.entity.StudyProgramme;
-import dev.cvetan.teachingschedule.entity.Subject;
+import dev.cvetan.teachingschedule.entity.*;
 import dev.cvetan.teachingschedule.model.enums.Semester;
 import dev.cvetan.teachingschedule.model.enums.StudyLevel;
 import dev.cvetan.teachingschedule.model.enums.SubjectType;
-import dev.cvetan.teachingschedule.repository.ProgrammeSubjectAssignmentRepository;
-import dev.cvetan.teachingschedule.repository.StudentGroupRepository;
-import dev.cvetan.teachingschedule.repository.StudyProgrammeRepository;
-import dev.cvetan.teachingschedule.repository.SubjectRepository;
+import dev.cvetan.teachingschedule.repository.*;
 import dev.cvetan.teachingschedule.util.CsvUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -34,11 +30,15 @@ public class DataInitializer implements CommandLineRunner {
     private final StudyProgrammeRepository studyProgrammeRepository;
     private final SubjectRepository subjectRepository;
     private final ProgrammeSubjectAssignmentRepository programmeSubjectAssignmentRepository;
+    private final TimeslotRepository timeslotRepository;
+    private final ClassroomRepository classroomRepository;
 
     private static final String STUDENT_GROUPS_PATH = "src/main/resources/csv/student_groups.csv";
     private static final String STUDY_PROGRAMMES_PATH = "src/main/resources/csv/study_programmes.csv";
     private static final String SUBJECTS_PATH = "src/main/resources/csv/subjects.csv";
     private static final String PROGRAMME_SUBJECTS_ASSIGNMENTS_PATH = "src/main/resources/csv/programme_subject_assignments.csv";
+    private static final String TIMESLOTS_PATH = "src/main/resources/csv/timeslots.csv";
+    private static final String CLASSROOMS_PATH = "src/main/resources/csv/classrooms.csv";
 
 
     @Override
@@ -54,7 +54,8 @@ public class DataInitializer implements CommandLineRunner {
                 studentGroups,
                 subjects
         );
-
+        importTimeslots();
+        importClassrooms();
     }
 
     private Map<String, StudentGroup> importStudentGroups() {
@@ -163,5 +164,41 @@ public class DataInitializer implements CommandLineRunner {
         programmeSubjectAssignmentRepository.saveAll(assignments);
 
         log.info("Imported programme subject assignments.");
+    }
+
+    private void importTimeslots() {
+        var content = csvUtil.readCsvFile(TIMESLOTS_PATH);
+        var timeslots = new ArrayList<Timeslot>();
+
+        content.forEach(row -> {
+            var timeslot = new Timeslot();
+
+            timeslot.setDayOfWeek(DayOfWeek.valueOf(row[0]));
+            timeslot.setStartTime(LocalTime.parse(row[1]));
+            timeslot.setEndTime(LocalTime.parse(row[2]));
+
+            timeslots.add(timeslot);
+        });
+
+        timeslotRepository.saveAll(timeslots);
+
+        log.info("Imported timeslots.");
+    }
+
+    private void importClassrooms() {
+        var content = csvUtil.readCsvFile(CLASSROOMS_PATH);
+        var classRooms = new ArrayList<Classroom>();
+
+        content.forEach(row -> {
+            var classroom = new Classroom();
+
+            classroom.setName(row[0]);
+
+            classRooms.add(classroom);
+        });
+
+        classroomRepository.saveAll(classRooms);
+
+        log.info("Imported classrooms.");
     }
 }
