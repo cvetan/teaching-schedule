@@ -6,6 +6,7 @@ plugins {
 
 ext {
     set('springDocVersion', '1.6.7')
+    set('openCsvVersion', '5.6')
 }
 
 group = 'dev.cvetan'
@@ -35,6 +36,10 @@ dependencies {
 
     // spring doc
     implementation "org.springdoc:springdoc-openapi-ui:$springDocVersion"
+
+    // opencsv
+    implementation "com.opencsv:opencsv:$openCsvVersion"
+
 
 }
 
