@@ -1,4 +1,4 @@
-package dev.cvetan.exception;
+package dev.cvetan.teachingschedule.exception.exception;
 
 public class TSRuntimeException extends RuntimeException {
 
