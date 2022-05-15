@@ -1,9 +1,13 @@
 package dev.cvetan.teachingschedule.cli;
 
+import dev.cvetan.teachingschedule.entity.ProgrammeSubjectAssignment;
 import dev.cvetan.teachingschedule.entity.StudentGroup;
 import dev.cvetan.teachingschedule.entity.StudyProgramme;
 import dev.cvetan.teachingschedule.entity.Subject;
+import dev.cvetan.teachingschedule.model.enums.Semester;
 import dev.cvetan.teachingschedule.model.enums.StudyLevel;
+import dev.cvetan.teachingschedule.model.enums.SubjectType;
+import dev.cvetan.teachingschedule.repository.ProgrammeSubjectAssignmentRepository;
 import dev.cvetan.teachingschedule.repository.StudentGroupRepository;
 import dev.cvetan.teachingschedule.repository.StudyProgrammeRepository;
 import dev.cvetan.teachingschedule.repository.SubjectRepository;
@@ -15,6 +19,10 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -25,10 +33,12 @@ public class DataInitializer implements CommandLineRunner {
     private final StudentGroupRepository studentGroupRepository;
     private final StudyProgrammeRepository studyProgrammeRepository;
     private final SubjectRepository subjectRepository;
+    private final ProgrammeSubjectAssignmentRepository programmeSubjectAssignmentRepository;
 
     private static final String STUDENT_GROUPS_PATH = "src/main/resources/csv/student_groups.csv";
     private static final String STUDY_PROGRAMMES_PATH = "src/main/resources/csv/study_programmes.csv";
     private static final String SUBJECTS_PATH = "src/main/resources/csv/subjects.csv";
+    private static final String PROGRAMME_SUBJECTS_ASSIGNMENTS_PATH = "src/main/resources/csv/programme_subject_assignments.csv";
 
 
     @Override
@@ -36,12 +46,18 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         log.info("Data initializer running...");
 
-        importStudentGroups();
-        importStudyProgrammes();
-        importSubjects();
+        var studentGroups = importStudentGroups();
+        var studyProgrammes = importStudyProgrammes();
+        var subjects = importSubjects();
+        importStudyProgrammes(
+                studyProgrammes,
+                studentGroups,
+                subjects
+        );
+
     }
 
-    private void importStudentGroups() {
+    private Map<String, StudentGroup> importStudentGroups() {
         var content = csvUtil.readCsvFile(STUDENT_GROUPS_PATH);
         var studentGroups = new ArrayList<StudentGroup>();
 
@@ -55,9 +71,17 @@ public class DataInitializer implements CommandLineRunner {
         studentGroupRepository.saveAll(studentGroups);
 
         log.info("Imported student groups.");
+
+        return studentGroups.stream()
+                .collect(
+                        Collectors.toMap(
+                                StudentGroup::getName,
+                                Function.identity()
+                        )
+                );
     }
 
-    private void importStudyProgrammes() {
+    private Map<String, StudyProgramme> importStudyProgrammes() {
         var content = csvUtil.readCsvFile(STUDY_PROGRAMMES_PATH);
         var studyProgrammes = new ArrayList<StudyProgramme>();
 
@@ -75,9 +99,17 @@ public class DataInitializer implements CommandLineRunner {
         studyProgrammeRepository.saveAll(studyProgrammes);
 
         log.info("Imported study programmes.");
+
+        return studyProgrammes.stream()
+                .collect(
+                        Collectors.toMap(
+                                StudyProgramme::getName,
+                                Function.identity()
+                        )
+                );
     }
 
-    private void importSubjects() {
+    private Map<String, Subject> importSubjects() {
         var content = csvUtil.readCsvFile(SUBJECTS_PATH);
         var subjects = new ArrayList<Subject>();
 
@@ -93,5 +125,43 @@ public class DataInitializer implements CommandLineRunner {
         subjectRepository.saveAll(subjects);
 
         log.info("Imported subjects.");
+
+        return subjects.stream()
+                .collect(
+                        Collectors.toMap(
+                                Subject::getName,
+                                Function.identity()
+                        )
+                );
+    }
+
+    private void importStudyProgrammes(
+            Map<String, StudyProgramme> studyProgrammesMap,
+            Map<String, StudentGroup> studentGroupsMap,
+            Map<String, Subject> subjectsMap
+    ) {
+        var content = csvUtil.readCsvFile(PROGRAMME_SUBJECTS_ASSIGNMENTS_PATH);
+        var assignments = new ArrayList<ProgrammeSubjectAssignment>();
+
+        content.forEach(row -> {
+            var assignment = new ProgrammeSubjectAssignment();
+            assignment.setStudyProgramme(studyProgrammesMap.get(row[0]));
+            assignment.setSubject(subjectsMap.get(row[1]));
+            assignment.setSemester(Semester.valueOf(row[2]));
+            assignment.setSubjectType(SubjectType.valueOf(row[3]));
+
+            var studentGroups = Arrays.stream(row[4].split(","))
+                    .filter(studentGroupsMap::containsKey)
+                    .map(studentGroupsMap::get)
+                    .collect(Collectors.toSet());
+
+            assignment.setStudentGroups(studentGroups);
+
+            assignments.add(assignment);
+        });
+
+        programmeSubjectAssignmentRepository.saveAll(assignments);
+
+        log.info("Imported programme subject assignments.");
     }
 }
