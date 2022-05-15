@@ -2,7 +2,7 @@ package dev.cvetan.teachingschedule.util;
 
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
-import dev.cvetan.teachingschedule.exception.exception.TSRuntimeException;
+import dev.cvetan.teachingschedule.exception.TSRuntimeException;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
