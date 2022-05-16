@@ -5,10 +5,12 @@ import dev.cvetan.teachingschedule.model.enums.Semester;
 import dev.cvetan.teachingschedule.model.enums.StudyLevel;
 import dev.cvetan.teachingschedule.model.enums.SubjectType;
 import dev.cvetan.teachingschedule.repository.*;
+import dev.cvetan.teachingschedule.service.LessonService;
 import dev.cvetan.teachingschedule.util.CsvUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -23,15 +25,19 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+@Order(1)
 public class DataInitializer implements CommandLineRunner {
 
     private final CsvUtil csvUtil;
+
     private final StudentGroupRepository studentGroupRepository;
     private final StudyProgrammeRepository studyProgrammeRepository;
     private final SubjectRepository subjectRepository;
     private final ProgrammeSubjectAssignmentRepository programmeSubjectAssignmentRepository;
     private final TimeslotRepository timeslotRepository;
     private final ClassroomRepository classroomRepository;
+
+    private final LessonService lessonService;
 
     private static final String STUDENT_GROUPS_PATH = "src/main/resources/csv/student_groups.csv";
     private static final String STUDY_PROGRAMMES_PATH = "src/main/resources/csv/study_programmes.csv";
@@ -56,6 +62,10 @@ public class DataInitializer implements CommandLineRunner {
         );
         importTimeslots();
         importClassrooms();
+
+        lessonService.generateLessonsStub();
+
+        log.info("Generated lessons stub.");
     }
 
     private Map<String, StudentGroup> importStudentGroups() {

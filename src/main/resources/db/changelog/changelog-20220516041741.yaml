@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1652667461409-1
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: bigint
+            columnName: classroom_id
+            tableName: lessons
+  - changeSet:
+      id: 1652667461409-2
+      author: cvetan (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: bigint
+            columnName: timeslot_id
+            tableName: lessons
+

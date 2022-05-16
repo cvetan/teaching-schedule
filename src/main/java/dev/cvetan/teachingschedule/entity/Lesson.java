@@ -26,11 +26,11 @@ public class Lesson {
     private StudentGroup studentGroup;
 
     @ManyToOne
-    @JoinColumn(name = "timeslot_id", nullable = false)
+    @JoinColumn(name = "timeslot_id")
     private Timeslot timeslot;
 
     @ManyToOne
-    @JoinColumn(name = "classroom_id", nullable = false)
+    @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
     @Column(name = "lesson_type", nullable = false)

@@ -7,6 +7,7 @@ plugins {
 ext {
     set('springDocVersion', '1.6.7')
     set('openCsvVersion', '5.6')
+    set('mapStructVersion', '1.4.2.Final')
 }
 
 group = 'dev.cvetan'
@@ -40,6 +41,9 @@ dependencies {
     // opencsv
     implementation "com.opencsv:opencsv:$openCsvVersion"
 
+    // mapstruct
+    implementation "org.mapstruct:mapstruct:$mapStructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
 
 }
 
