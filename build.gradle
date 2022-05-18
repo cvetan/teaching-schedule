@@ -8,6 +8,7 @@ ext {
     set('springDocVersion', '1.6.7')
     set('openCsvVersion', '5.6')
     set('mapStructVersion', '1.4.2.Final')
+    set('optaPlannerVersion', '8.20.0.Final')
 }
 
 group = 'dev.cvetan'
@@ -44,6 +45,12 @@ dependencies {
     // mapstruct
     implementation "org.mapstruct:mapstruct:$mapStructVersion"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+
+    // optaplanner
+    implementation "org.optaplanner:optaplanner-bom:$optaPlannerVersion"
+    implementation "org.optaplanner:optaplanner-spring-boot-starter:$optaPlannerVersion"
+//    testImplementation("org.optaplanner:optaplanner-test")
+//    testImplementation("org.optaplanner:optaplanner-benchmark")
 
 }
 
