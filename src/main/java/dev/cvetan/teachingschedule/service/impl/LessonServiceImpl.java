@@ -9,6 +9,7 @@ import dev.cvetan.teachingschedule.repository.LessonRepository;
 import dev.cvetan.teachingschedule.repository.ProgrammeSubjectAssignmentRepository;
 import dev.cvetan.teachingschedule.service.LessonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,7 +29,7 @@ public class LessonServiceImpl implements LessonService {
     public void generateLessonsStub() {
         var assignments = programmeSubjectAssignmentRepository.findAllSorted();
         var lessons = assignments.stream()
-                .flatMap(assignment ->  assignment.getStudentGroups()
+                .flatMap(assignment -> assignment.getStudentGroups()
                         .stream()
                         .map(studentGroup -> {
                             var subject = assignment.getSubject();
@@ -57,7 +58,12 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public ListDTO<LessonDTO> fetchLessons() {
-        var lessons = lessonRepository.findAllSorted();
+        var lessons = lessonRepository.findAll(
+                Sort.by("timeslot.dayOfWeek")
+                        .ascending()
+                        .and(Sort.by("timeslot.startTime")
+                                .ascending())
+        );
         List<LessonDTO> lessonDTOs = lessons.stream()
                 .map(lessonsMapper::map)
                 .toList();
