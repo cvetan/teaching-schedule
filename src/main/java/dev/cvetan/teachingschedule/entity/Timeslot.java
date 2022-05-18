@@ -20,7 +20,7 @@ public class Timeslot {
     private Long id;
 
     @Column(name = "day_of_week", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private DayOfWeek dayOfWeek;
 
     @Column(name = "start_time", nullable = false)

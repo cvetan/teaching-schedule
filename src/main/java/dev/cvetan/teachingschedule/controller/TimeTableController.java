@@ -1,13 +1,11 @@
 package dev.cvetan.teachingschedule.controller;
 
-import dev.cvetan.teachingschedule.service.TimeTableRepository;
-import dev.cvetan.teachingschedule.solver.TimeTable;
+import dev.cvetan.teachingschedule.config.Constants;
+import dev.cvetan.teachingschedule.service.TimetableService;
+import dev.cvetan.teachingschedule.solver.Timetable;
 import lombok.RequiredArgsConstructor;
-import org.optaplanner.core.api.score.ScoreManager;
-import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.optaplanner.core.api.solver.SolverStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,32 +13,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TimeTableController {
 
-    private final TimeTableRepository timeTableRepository;
-    private final SolverManager<TimeTable, Long> solverManager;
+    private final SolverManager<Timetable, Long> solverManager;
 
-    private final ScoreManager<TimeTable, HardSoftScore> scoreManager;
+//    private final ScoreManager<Timetable, HardSoftScore> scoreManager;
 
-    @GetMapping("/api/timetable")
-    public TimeTable getTimeTable() {
-        var solverStatus = getSolverStatus();
-        var solution = timeTableRepository.findById(TimeTableRepository.SINGLETON_TIME_TABLE_ID);
+    private final TimetableService timetableService;
 
-        scoreManager.updateScore(solution);
-        solution.setSolverStatus(solverStatus);
-
-        return solution;
-    }
+//    @GetMapping("/api/timetable")
+//    public Timetable getTimeTable() {
+//        var solverStatus = getSolverStatus();
+//        var solution = timetableService.getTimeTable(Constants.TIMETABLE_ID);
+//
+//        scoreManager.updateScore(solution);
+//        solution.setSolverStatus(solverStatus);
+//
+//        return solution;
+//    }
 
     public SolverStatus getSolverStatus() {
-        return solverManager.getSolverStatus(TimeTableRepository.SINGLETON_TIME_TABLE_ID);
+        return solverManager.getSolverStatus(Constants.TIMETABLE_ID);
     }
 
     @PostMapping("/api/timetable")
     public void solve() {
         solverManager.solveAndListen(
-                TimeTableRepository.SINGLETON_TIME_TABLE_ID,
-                timeTableRepository::findById,
-                timeTableRepository::save
+                Constants.TIMETABLE_ID,
+                timetableService::getTimeTable,
+                timetableService::save
         );
     }
 }

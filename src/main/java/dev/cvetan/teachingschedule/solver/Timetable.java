@@ -20,7 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TimeTable {
+public class Timetable {
 
     @ValueRangeProvider(id = "timeslotRange")
     @ProblemFactCollectionProperty
@@ -38,7 +38,7 @@ public class TimeTable {
 
     private SolverStatus solverStatus;
 
-    public TimeTable(
+    public Timetable(
             List<Timeslot> timeslots,
             List<Classroom> classrooms,
             List<Lesson> lessons

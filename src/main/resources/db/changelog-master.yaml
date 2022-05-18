@@ -47,3 +47,6 @@ databaseChangeLog:
   - include:
       file: changelog/changelog-20220516041741.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changelog/changelog-20220519014504.yaml
+      relativeToChangelogFile: true
