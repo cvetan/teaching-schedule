@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,4 +20,9 @@ public class StudentGroup {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @OneToMany(mappedBy = "studentGroup")
+    private Set<Lesson> lessons;
+
+    @ManyToMany(mappedBy = "studentGroups")
+    private Set<ProgrammeSubjectAssignment> programmeSubjectAssignments;
 }

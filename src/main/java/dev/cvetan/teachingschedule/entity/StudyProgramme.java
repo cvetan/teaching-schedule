@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "study_programmes")
@@ -28,4 +29,7 @@ public class StudyProgramme {
     @Column(name = "study_level", nullable = false)
     @Enumerated(EnumType.STRING)
     private StudyLevel studyLevel;
+
+    @OneToMany(mappedBy = "studyProgramme")
+    private Set<ProgrammeSubjectAssignment> programmeSubjectAssignments;
 }
