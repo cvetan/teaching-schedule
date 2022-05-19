@@ -6,12 +6,14 @@ import dev.cvetan.teachingschedule.repository.TimeslotRepository;
 import dev.cvetan.teachingschedule.service.TimetableService;
 import dev.cvetan.teachingschedule.solver.Timetable;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TimetableServiceImpl implements TimetableService {
 
     private final TimeslotRepository timeslotRepository;

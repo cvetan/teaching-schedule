@@ -9,10 +9,10 @@ import dev.cvetan.teachingschedule.repository.LessonRepository;
 import dev.cvetan.teachingschedule.repository.ProgrammeSubjectAssignmentRepository;
 import dev.cvetan.teachingschedule.service.LessonService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,12 +58,25 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public ListDTO<LessonDTO> fetchLessons() {
-        var lessons = lessonRepository.findAll(
-                Sort.by("timeslot.dayOfWeek")
-                        .ascending()
-                        .and(Sort.by("timeslot.startTime")
-                                .ascending())
-        );
+        return mapLessons(lessonRepository.findAllSorted());
+    }
+
+    @Override
+    public ListDTO<LessonDTO> fetchLessonsByStudentGroup(String studentGroup) {
+        return mapLessons(lessonRepository.findAllByStudentGroup(studentGroup));
+    }
+
+    @Override
+    public ListDTO<LessonDTO> fetchLessonsByDayOfWeek(DayOfWeek dayOfWeek) {
+        return mapLessons(lessonRepository.findAllByDayOfWeek(dayOfWeek));
+    }
+
+    @Override
+    public ListDTO<LessonDTO> fetchLessonsByClassroom(String classroom) {
+        return mapLessons(lessonRepository.findAllByClassroom(classroom));
+    }
+
+    private ListDTO<LessonDTO> mapLessons(List<Lesson> lessons) {
         List<LessonDTO> lessonDTOs = lessons.stream()
                 .map(lessonsMapper::map)
                 .toList();

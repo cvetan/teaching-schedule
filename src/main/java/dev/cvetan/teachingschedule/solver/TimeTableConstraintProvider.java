@@ -30,7 +30,7 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
     }
 
     private Constraint studentGroupConflict(ConstraintFactory constraintFactory) {
-        // A student can attend at most one lesson at the same time.
+        // A student group can attend at most one lesson at the same time.
         return constraintFactory
                 .forEachUniquePair(Lesson.class,
                         Joiners.equal(Lesson::getTimeslot),
