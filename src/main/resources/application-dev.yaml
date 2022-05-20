@@ -1,3 +1,7 @@
 spring:
   datasource:
-    url: http://localhost:3306/tea
+    url: jdbc:mariadb://localhost:3306/teaching-schedule
+    username: root
+    password: root
+  liquibase:
+    drop-first: true
