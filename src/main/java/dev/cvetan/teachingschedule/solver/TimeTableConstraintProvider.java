@@ -6,6 +6,11 @@ import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
 import org.optaplanner.core.api.score.stream.Joiners;
+import org.optaplanner.core.api.score.stream.tri.TriConstraintCollector;
+
+import java.util.stream.Collectors;
+
+import static org.optaplanner.core.api.score.stream.ConstraintCollectors.toList;
 
 public class TimeTableConstraintProvider implements ConstraintProvider {
 
@@ -13,7 +18,8 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[] {
                 roomConflict(constraintFactory),
-                studentGroupConflict(constraintFactory)
+                studentGroupConflict(constraintFactory),
+                roomCapacity(constraintFactory)
         };
     }
 
@@ -36,5 +42,21 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
                         Joiners.equal(Lesson::getTimeslot),
                         Joiners.equal(Lesson::getStudentGroup))
                 .penalize("Student group conflict", HardSoftScore.ONE_HARD);
+    }
+
+    private Constraint roomCapacity(ConstraintFactory constraintFactory) {
+        var roomCapacity = 4;
+
+        return constraintFactory
+                .forEach(Lesson.class)
+                .groupBy(Lesson::getTimeslot, Lesson::getClassroom, toList())
+                .filter(((timeslot, classroom, lessons) -> {
+                    var studentGroups = lessons.stream()
+                            .map(Lesson::getStudentGroup)
+                            .collect(Collectors.toSet());
+
+                    return studentGroups.size() <= roomCapacity;
+                }))
+                .penalize("Room capacity exceeded", HardSoftScore.ONE_HARD);
     }
 }
