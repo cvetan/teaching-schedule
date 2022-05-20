@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: http://localhost:3306/tea
