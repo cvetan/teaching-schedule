@@ -34,7 +34,7 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
     }
 
     private Constraint roomCapacity(ConstraintFactory constraintFactory) {
-        var roomCapacity = 1;
+        var roomCapacity = 4;
 
         return constraintFactory
                 .forEach(Lesson.class)
