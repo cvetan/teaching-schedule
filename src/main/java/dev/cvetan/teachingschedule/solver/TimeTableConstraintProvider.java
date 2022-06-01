@@ -17,7 +17,7 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
         return new Constraint[]{
                 studentGroupConflict(constraintFactory),
                 roomCapacity(constraintFactory),
-                maxLessonsForStudentGroup(constraintFactory),
+                studentGroupLessonLimit(constraintFactory),
                 subjectConflict(constraintFactory),
                 lessonTypeConflict(constraintFactory)
         };
@@ -43,12 +43,12 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
                 .penalize("Room capacity exceeded", HardSoftScore.ONE_HARD);
     }
 
-    private Constraint maxLessonsForStudentGroup(ConstraintFactory constraintFactory) {
+    private Constraint studentGroupLessonLimit(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .forEach(Lesson.class)
                 .groupBy(Lesson::getStudentGroup, lesson -> lesson.getTimeslot().getDayOfWeek(), count())
                 .filter(((studentGroup, dayOfWeek, count) -> count > 3))
-                .penalize("Max lessons for student group", HardSoftScore.ONE_HARD);
+                .penalize("Student group lesson limit", HardSoftScore.ONE_HARD);
     }
 
     private Constraint subjectConflict(ConstraintFactory constraintFactory) {
